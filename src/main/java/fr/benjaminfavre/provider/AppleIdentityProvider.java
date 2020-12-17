@@ -2,6 +2,7 @@ package fr.benjaminfavre.provider;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.keycloak.OAuth2Constants;
+import org.keycloak.OAuthErrorException;
 import org.keycloak.broker.oidc.AbstractOAuth2IdentityProvider;
 import org.keycloak.broker.oidc.OIDCIdentityProvider;
 import org.keycloak.broker.oidc.OIDCIdentityProviderConfig;
@@ -13,11 +14,14 @@ import org.keycloak.crypto.Algorithm;
 import org.keycloak.crypto.KeyWrapper;
 import org.keycloak.crypto.ServerECDSASignatureSignerContext;
 import org.keycloak.crypto.SignatureSignerContext;
+import org.keycloak.events.Details;
+import org.keycloak.events.Errors;
 import org.keycloak.events.EventBuilder;
 import org.keycloak.jose.jws.JWSBuilder;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.representations.JsonWebToken;
+import org.keycloak.services.ErrorResponseException;
 import org.keycloak.util.JsonSerialization;
 
 import javax.ws.rs.FormParam;
@@ -38,6 +42,8 @@ public class AppleIdentityProvider extends OIDCIdentityProvider implements Socia
         super(session, config);
         config.setAuthorizationUrl("https://appleid.apple.com/auth/authorize?response_mode=form_post");
         config.setTokenUrl("https://appleid.apple.com/auth/token");
+        config.setJwksUrl("https://appleid.apple.com/auth/token");
+        config.setValidateSignature(true);
     }
 
     @Override
@@ -130,4 +136,6 @@ public class AppleIdentityProvider extends OIDCIdentityProvider implements Socia
             public String lastName;
         }
     }
+
+
 }
