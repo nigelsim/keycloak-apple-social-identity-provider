@@ -27,3 +27,10 @@ jobs:
       with:
         name: apple-social-identity-provider
         path: target/apple-social-identity-provider-*.jar
+    - name: Create a Release
+      uses: actions/create-release@v1.1.4
+      with:
+        # The name of the tag. This should come from the webhook payload, `github.GITHUB_REF` when a user pushes a new tag
+        tag_name: github.GITHUB_REF
+        # The name of the release. For example, `Release v1.0.1`
+        release_name: Release github.GITHUB_REF
