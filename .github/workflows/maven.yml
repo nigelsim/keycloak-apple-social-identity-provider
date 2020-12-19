@@ -27,3 +27,8 @@ jobs:
       with:
         name: apple-social-identity-provider
         path: target/apple-social-identity-provider-*.jar
+    - name: Update release
+      uses: johnwbyrd/update-release@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ github.workspace/target/apple-social-identity-provider-*.jar }}
