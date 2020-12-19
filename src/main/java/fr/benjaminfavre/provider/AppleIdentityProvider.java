@@ -69,6 +69,7 @@ public class AppleIdentityProvider extends OIDCIdentityProvider implements Socia
             try {
                 logger.debug("getFederatedIdentity, userJson:"+ userJson);
                 User user = JsonSerialization.readValue(userJson, User.class);
+                context.setUsername(user.email);
                 context.setEmail(user.email);
                 context.setFirstName(user.name.firstName);
                 context.setLastName(user.name.lastName);
