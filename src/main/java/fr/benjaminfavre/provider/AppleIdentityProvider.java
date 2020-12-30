@@ -50,7 +50,7 @@ public class AppleIdentityProvider extends OIDCIdentityProvider implements Socia
         super(session, config);
         config.setAuthorizationUrl("https://appleid.apple.com/auth/authorize?response_mode=form_post");
         config.setTokenUrl("https://appleid.apple.com/auth/token");
-        config.setJwksUrl("https://appleid.apple.com/auth/token");
+        config.setJwksUrl("https://appleid.apple.com/auth/keys");
         config.setValidateSignature(true);
     }
 
