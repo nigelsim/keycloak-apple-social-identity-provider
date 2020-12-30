@@ -25,5 +25,4 @@ jobs:
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.1
       with:
-        name: apple-social-identity-provider
         path: target/apple-social-identity-provider-*.jar
