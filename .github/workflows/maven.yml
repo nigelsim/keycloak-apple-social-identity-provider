@@ -27,8 +27,23 @@ jobs:
       with:
         name: apple-social-identity-provider
         path: target/apple-social-identity-provider-*.jar
-    - name: Update release
-      uses: johnwbyrd/update-release@v1.0.0
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1.1.4
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        files: target/apple-social-identity-provider-*.jar
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1.0.2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+        asset_path: ./apple-social-identity-provider.jar
+        asset_name: apple-social-identity-provider-${{ github.ref }}.jar
+        asset_content_type: application/java-archive
